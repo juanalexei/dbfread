@@ -136,8 +136,13 @@ class FieldParser:
                 if data.strip(b' \x00') == b'':
                     return 0
                 else:
-                    raise ValueError(
-                        'Memo index is not an integer: {!r}'.format(data))
+                    try:
+                        stripped_data = data.strip(b' \x00')
+                        string = str(stripped_data, 'ascii')
+                        return int(string)
+                    except ValueError:
+                        raise ValueError(
+                            'Memo index is not an integer: {!r}'.format(data))
 
     def parseM(self, field, data):
         """Parse memo field (M, G, B or P)
