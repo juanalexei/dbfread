@@ -167,12 +167,12 @@ class FieldParser:
         Returns int, float or None if the field is empty.
         """
         # In some files * is used for padding.
-        data = data.strip().strip(b'*')
+        data = data.strip().strip(b'*\00')
 
         try:
             return int(data)
         except ValueError:
-            if not data.strip():
+            if not data or data == b'':
                 return None
             else:
                 # Account for , in numeric fields
