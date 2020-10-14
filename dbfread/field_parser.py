@@ -119,7 +119,7 @@ class FieldParser:
             return True
         elif data in b'FfNn':
             return False
-        elif data in b'? ':
+        elif data in b'? \x00':
             return None
         else:
             # Todo: return something? (But that would be misleading!)
